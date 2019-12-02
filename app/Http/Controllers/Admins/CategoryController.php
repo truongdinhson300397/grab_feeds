@@ -25,7 +25,7 @@ class CategoryController extends Controller
         if (isset($search)) {
             $categories = $categories->where('name', 'like', '%' . $search . '%');
         }
-        $categories = $categories->paginate(3);
+        $categories = $categories->paginate(10);
         return view('admins.categories.index', [
             'categories' => $categories->appends($request->except('page'))
         ]);

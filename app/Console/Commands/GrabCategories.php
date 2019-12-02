@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Requests\CreateCategoryRequest;
 use App\Models\Category;
 use App\Models\Item;
 use Illuminate\Console\Command;
@@ -49,6 +50,8 @@ class GrabCategories extends Command
                 $category->items()->saveMany($items);
             }
         }
+
+//       var_dump($this->getChunkData());
     }
 
     // get html rss
@@ -92,23 +95,32 @@ class GrabCategories extends Command
     // convert string to array of categories
     protected function getArrayCategories()
     {
+        $arrays = [];
+        $array_unique = [];
         foreach ($this->getXmlRss() as $xml) {
             foreach ($xml->channel->category as $value) {
-                $categories = explode("/", $value);
+                array_push($arrays, explode("/", $value));
+                $array_merge = array_merge(...$arrays);
+                $array_unique = array_unique($array_merge);
             }
         }
-        return $categories;
+        return $array_unique;
     }
 
     // get data categories
     protected function getDataCategories()
     {
         $listOfCategory = [];
-        foreach ($this->getArrayCategories() as $name) {
-            $categories = new Category();
-            $categories->name = $name;
-            $categories->save();
-            $listOfCategory[] = $categories;
+        if($this->getArrayCategories() === null){
+            echo "No category";
+        }
+        else{
+            foreach ($this->getArrayCategories() as $name) {
+                $categories = new Category();
+                $categories->name = $name;
+                $categories->save();
+                $listOfCategory[] = $categories;
+            }
         }
         return $listOfCategory;
     }
@@ -118,11 +130,11 @@ class GrabCategories extends Command
     {
         $collect = [];
         foreach ($this->getXmlRss() as $xml) {
-            foreach ($xml->channel->item as $items) {
-                $collect[] = $items;
+            foreach ($xml->channel->item as $item) {
+                $collect[] = $item;
+                $chunk = collect($collect)->chunk(20);
             }
         }
-        $chunk = collect($collect)->chunk(20);
         return $chunk->toArray();
     }
 

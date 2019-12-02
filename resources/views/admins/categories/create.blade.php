@@ -51,7 +51,7 @@
                                 <span class="section">Personal Info</span>
 
                                 <div class="item form-group">
-                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="title">Name category <span class="required">*</span>
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="name">Name category <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6">
                                         <input id="name" class="form-control @error('name') is-invalid @enderror " data-validate-length-range="6" data-validate-words="2" name="name" placeholder="Name category" type="text">
