@@ -153,5 +153,6 @@ class GrabCategories extends Command
             }
         }
         return $listOfItem;
+        
     }
 }
