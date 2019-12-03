@@ -14,13 +14,14 @@ class CreateCategoryItemTable extends Migration
     public function up()
     {
         Schema::create('category_item', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')
                 ->on('categories')->onDelete('cascade');
             $table->unsignedBigInteger('item_id');
             $table->foreign('item_id')->references('id')
                 ->on('items')->onDelete('cascade');
-            $table->primary(['category_id', 'item_id']);
+//            $table->primary(['category_id', 'item_id']);
         });
     }
 

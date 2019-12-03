@@ -26,10 +26,19 @@
             <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-
-                    <li><a><i class="fa fa-table"></i> Category <span class="fa fa-chevron-down"></span></a>
+                    <li><a><i class="fa fa-table"></i> Categories <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="{{ route('categories.index') }}">List</a></li>
+                        </ul>
+                    </li>
+                    <li><a><i class="fa fa-table"></i> Items <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="{{ route('items.index') }}">List</a></li>
+                        </ul>
+                    </li>
+                    <li><a><i class="fa fa-table"></i> Category Item <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="{{ route('category-item.index') }}">List</a></li>
                         </ul>
                     </li>
                 </ul>

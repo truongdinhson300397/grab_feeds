@@ -53,6 +53,11 @@ Route::prefix('admin')->middleware('LoginAdmin')->group(function () {
         return view('admins.dashboard.statistical');
     });
     Route::resources(['categories' => 'Admins\CategoryController']);
+    Route::resources(['items' => 'Admins\ItemController']);
+    Route::prefix('category-item')->group(function () {
+        route::get('/', 'Admins\CategoryItemController@index')->name('category-item.index');
+        route::delete('{id}', 'Admins\CategoryItemController@destroy')->name('category-item.destroy');
+    });
 });
 
 Route::prefix('user')->group(function () {

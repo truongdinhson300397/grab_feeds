@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Http\Requests\CreateCategoryRequest;
 use App\Models\Category;
 use App\Models\Item;
 use Illuminate\Console\Command;
@@ -51,7 +50,7 @@ class GrabCategories extends Command
             }
         }
 
-//       var_dump($this->getChunkData());
+//       var_dump($this->getXmlRss());
     }
 
     // get html rss
@@ -77,19 +76,9 @@ class GrabCategories extends Command
     {
         $contents = [];
         foreach ($this->getLinkRss() as $link) {
-            $contents[] = file_get_contents($link);
+            $contents[] = new SimpleXmlElement(file_get_contents($link));
         }
         return $contents;
-    }
-
-    // get xml rss
-    protected function getXmlRss()
-    {
-        $xml = [];
-        foreach ($this->getContentRss() as $content) {
-            $xml[] = new SimpleXmlElement($content);
-        }
-        return $xml;
     }
 
     // convert string to array of categories
@@ -97,7 +86,7 @@ class GrabCategories extends Command
     {
         $arrays = [];
         $array_unique = [];
-        foreach ($this->getXmlRss() as $xml) {
+        foreach ($this->getContentRss() as $xml) {
             foreach ($xml->channel->category as $value) {
                 array_push($arrays, explode("/", $value));
                 $array_merge = array_merge(...$arrays);
@@ -111,8 +100,8 @@ class GrabCategories extends Command
     protected function getDataCategories()
     {
         $listOfCategory = [];
-        if($this->getArrayCategories() === null){
-            echo "No category";
+        if(count($this->getArrayCategories()) === 0){
+            echo "No category \n";
         }
         else{
             foreach ($this->getArrayCategories() as $name) {
@@ -129,13 +118,13 @@ class GrabCategories extends Command
     protected function getChunkData()
     {
         $collect = [];
-        foreach ($this->getXmlRss() as $xml) {
+        foreach ($this->getContentRss() as $xml) {
             foreach ($xml->channel->item as $item) {
                 $collect[] = $item;
-                $chunk = collect($collect)->chunk(20);
+                $chunks = collect($collect)->chunk(20);
             }
         }
-        return $chunk->toArray();
+        return $chunks->toArray();
     }
 
     // get data items
@@ -153,6 +142,5 @@ class GrabCategories extends Command
             }
         }
         return $listOfItem;
-        
     }
 }
