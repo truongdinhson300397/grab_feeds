@@ -12,10 +12,21 @@ use Illuminate\Http\Request;
 class ItemController extends Controller
 {
     /**
+     * Display a listing of the events.
+     *
+     * @return Item
+     */
+    public function shows(Item $event)
+    {
+        return $event;
+    }
+
+    /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Item
      */
+
     public function index(FilterCategoryRequest $request)
     {
         $sort = $request->get('sort', 'id');

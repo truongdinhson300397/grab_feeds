@@ -54,16 +54,16 @@ Route::prefix('admin')->middleware('LoginAdmin')->group(function () {
     });
     Route::resources(['categories' => 'Admins\CategoryController']);
     Route::resources(['items' => 'Admins\ItemController']);
-    Route::prefix('category-item')->group(function () {
-        route::get('/', 'Admins\CategoryItemController@index')->name('category-item.index');
-        route::delete('{id}', 'Admins\CategoryItemController@destroy')->name('category-item.destroy');
-    });
+//    Route::prefix('category-item')->group(function () {
+//        route::get('/', 'CategoryItemController@index')->name('category-item.index');
+//        route::delete('{id}', 'Admins\CategoryItemController@destroy')->name('category-item.destroy');
+//    });
 });
 
 Route::prefix('user')->group(function () {
     Route::get('home', 'UserHomeController@index')->name('user.home');
 });
 
-
-
-
+Route::get('/events/{event}', 'Admins\ItemController@shows')
+    ->name('events.show');
+Route::feeds();

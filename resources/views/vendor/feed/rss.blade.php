@@ -4,18 +4,18 @@
 ?>
 <rss version="2.0">
     <channel>
-        <title>{{ $meta['title'] }}></title>
-        <link>{{ url($meta['link']) }}></link>
-        <description>{{ $meta['description'] }}></description>
+        <title><![CDATA[{{ $meta['title'] }}]]></title>
+        <link><![CDATA[{{ url($meta['link']) }}]]></link>
+        <description><![CDATA[{{ $meta['description'] }}]]></description>
         <language>{{ $meta['language'] }}</language>
         <pubDate>{{ $meta['updated'] }}</pubDate>
 
         @foreach($items as $item)
             <item>
-                <title>{{ $item->title }}</title>
+                <title><![CDATA[{{ $item->title }}]]></title>
                 <link>{{ url($item->link) }}</link>
-                <description>{{ $item->summary }}</description>
-                <author>{{ $item->author }}</author>
+                <description><![CDATA[{!! $item->summary !!}]]></description>
+                <author><![CDATA[{{ $item->author }}]]></author>
                 <guid>{{ url($item->id) }}</guid>
                 <pubDate>{{ $item->updated->toRssString() }}</pubDate>
             </item>
